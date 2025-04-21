@@ -4,7 +4,8 @@ import ResultsPage from "./pages/ResultsPage";
 import MoodSelector from "./components/MoodSelector";
 import EnergyLevelSelector from "./components/EnergyLevelSelector";
 import TimeSelector from "./components/TimeSelector";
-import MoodQuiz from "./components/MoodQuiz"; 
+import MoodQuiz from "./components/MoodQuiz";
+import FunFactsPage from "./pages/FunFactsPage"; // Import FunFactsPage
 import "./App.css";
 
 const App = () => {
@@ -12,6 +13,7 @@ const App = () => {
   const [mood, setMood] = useState(null);
   const [energy, setEnergy] = useState(null);
   const [time, setTime] = useState(null);
+
   const resetApp = () => {
     setMood(null);
     setEnergy(null);
@@ -20,19 +22,25 @@ const App = () => {
   };
 
   return (
-    <div className="container">
+    <div className="app">
       {page === "home" && (
         <HomePage
           onStart={() => setPage("selection")}
-          onTakeQuiz={() => setPage("quiz")} // Add a button to start the quiz
+          onTakeQuiz={() => setPage("quiz")}
+          onViewFunFacts={() => setPage("funfacts")} // Navigate to Fun Facts Page
         />
       )}
       {page === "quiz" && (
         <MoodQuiz
           onResult={(resultMood) => {
-            setMood(resultMood); // Set the mood based on quiz result
-            setPage("selection"); // Navigate to the selection page
+            setMood(resultMood);
+            if (resultMood === "Sad" || resultMood === "Stressed") {
+              setPage("funfacts"); // Navigate to Fun Facts if mood is bad
+            } else {
+              setPage("selection");
+            }
           }}
+          onReturnHome={() => setPage("home")}
         />
       )}
       {page === "selection" && (
@@ -59,6 +67,9 @@ const App = () => {
           time={time}
           onReset={resetApp}
         />
+      )}
+      {page === "funfacts" && (
+        <FunFactsPage onReturnHome={() => setPage("home")} />
       )}
     </div>
   );
