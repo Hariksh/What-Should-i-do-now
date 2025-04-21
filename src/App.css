@@ -214,6 +214,19 @@ li:hover,
   margin-top: 1rem;
 }
 
+.button-container {
+  display: flex;
+  gap: 45px;
+  justify-content: center;
+}
+
+.start-button,
+.quiz-button {
+  padding: 17px 40px;
+  font-size: 16px;
+  cursor: pointer;
+}
+
 .answer-button {
   background: linear-gradient(135deg, #42a5f5, #1e90ff);
   color: white;
