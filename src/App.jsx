@@ -45,7 +45,12 @@ const App = () => {
       )}
       {page === "selection" && (
         <>
-          {!mood && <MoodSelector setMood={setMood} />}
+          {!mood && (
+            <MoodSelector
+              setMood={setMood}
+              onReturnHome={() => setPage("home")} // Pass function to navigate to HomePage
+            />
+          )}
           {mood && !energy && <EnergyLevelSelector setEnergy={setEnergy} />}
           {mood && energy && !time && <TimeSelector setTime={setTime} />}
           {mood && energy && time && (

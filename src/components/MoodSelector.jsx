@@ -1,6 +1,6 @@
 import React from "react";
 
-const MoodSelector = ({ setMood }) => {
+const MoodSelector = ({ setMood, onReturnHome }) => {
   const moods = [
     { name: "Happy", emoji: "😊" },
     { name: "Sad", emoji: "😢" },
@@ -52,6 +52,12 @@ const MoodSelector = ({ setMood }) => {
           </div>
         ))}
       </div>
+      {/* Add Return to Home Button */}
+      <button
+        onClick={onReturnHome}
+      >
+        Return to Home
+      </button>
     </div>
   );
 };
