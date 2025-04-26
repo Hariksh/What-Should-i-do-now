@@ -84,32 +84,30 @@ const questions = [
   },
 ];
 
-const MoodQuiz = ({ onResult }) => {
+const MoodQuiz = ({ onResult, onReturnHome }) => {
   const [currentQuestion, setCurrentQuestion] = useState(0);
   const [scores, setScores] = useState({});
   const [quizComplete, setQuizComplete] = useState(false);
 
   const handleAnswerClick = (moods) => {
-    // Update scores based on selected answer
     const updatedScores = { ...scores };
     Object.entries(moods).forEach(([mood, value]) => {
       updatedScores[mood] = (updatedScores[mood] || 0) + value;
     });
     setScores(updatedScores);
 
-    // Move to the next question or finish the quiz
     if (currentQuestion < questions.length - 1) {
       setCurrentQuestion(currentQuestion + 1);
     } else {
       setQuizComplete(true);
       const result = calculateResult(updatedScores);
-      onResult(result); // Pass the result to the parent component
+      onResult(result);
     }
   };
 
   const calculateResult = (scores) => {
     return Object.entries(scores)
-      .sort((a, b) => b[1] - a[1])[0][0]; // Return the mood with the highest score
+      .sort((a, b) => b[1] - a[1])[0][0];
   };
 
   return (
@@ -138,32 +136,13 @@ const MoodQuiz = ({ onResult }) => {
           <p>Thank you for completing the quiz!</p>
         </div>
       )}
+      <button
+        onClick={onReturnHome}
+      >
+        Return to Home
+      </button>
     </div>
   );
 };
 
-const App = () => {
-  const [page, setPage] = useState("quiz");
-  const [mood, setMood] = useState(null);
-
-  return (
-    <div className="app">
-      {page === "quiz" && (
-        <MoodQuiz
-          onResult={(resultMood) => {
-            setMood(resultMood); // Set the mood based on quiz result
-            setPage("selection"); // Navigate to the selection page
-          }}
-        />
-      )}
-      {page === "selection" && (
-        <div>
-          <h2>Your mood is: {mood}</h2>
-          <button onClick={() => setPage("quiz")}>Retake Quiz</button>
-        </div>
-      )}
-    </div>
-  );
-};
-
-export default App;
+export default MoodQuiz;

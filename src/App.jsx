@@ -34,21 +34,28 @@ const App = () => {
         <MoodQuiz
           onResult={(resultMood) => {
             setMood(resultMood);
-            if (resultMood === "Sad" || resultMood === "Stressed") {
-              setPage("funfacts"); // Navigate to Fun Facts if mood is bad
-            } else {
-              setPage("selection");
-            }
+            setPage("quiz-complete"); // Navigate to a quiz completion page
           }}
           onReturnHome={() => setPage("home")}
         />
+      )}
+      {page === "quiz-complete" && (
+        <div className="quiz-complete">
+          <h2>Thank you for completing the quiz!</h2>
+          <button
+            className="home-button"
+            onClick={() => setPage("home")} 
+          >
+            Return to Home
+          </button>
+        </div>
       )}
       {page === "selection" && (
         <>
           {!mood && (
             <MoodSelector
               setMood={setMood}
-              onReturnHome={() => setPage("home")} // Pass function to navigate to HomePage
+              onReturnHome={() => setPage("home")} 
             />
           )}
           {mood && !energy && <EnergyLevelSelector setEnergy={setEnergy} />}
