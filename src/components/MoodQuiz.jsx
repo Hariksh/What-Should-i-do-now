@@ -88,6 +88,7 @@ const MoodQuiz = ({ onResult, onReturnHome }) => {
   const [currentQuestion, setCurrentQuestion] = useState(0);
   const [scores, setScores] = useState({});
   const [quizComplete, setQuizComplete] = useState(false);
+  const [resultMood, setResultMood] = useState(null); // State to store the result mood
 
   const handleAnswerClick = (moods) => {
     const updatedScores = { ...scores };
@@ -101,13 +102,14 @@ const MoodQuiz = ({ onResult, onReturnHome }) => {
     } else {
       setQuizComplete(true);
       const result = calculateResult(updatedScores);
-      onResult(result);
+      setResultMood(result); // Store the result mood
+      onResult(result); // Pass the result to the parent component
     }
   };
 
   const calculateResult = (scores) => {
     return Object.entries(scores)
-      .sort((a, b) => b[1] - a[1])[0][0];
+      .sort((a, b) => b[1] - a[1])[0][0]; // Return the mood with the highest score
   };
 
   return (
@@ -132,7 +134,7 @@ const MoodQuiz = ({ onResult, onReturnHome }) => {
         </>
       ) : (
         <div className="quiz-result">
-          <h2>Your Mood: {calculateResult(scores)}</h2>
+          <h2>Your Mood: {resultMood}</h2> {/* Display the result mood */}
           <p>Thank you for completing the quiz!</p>
         </div>
       )}
