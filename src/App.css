@@ -218,7 +218,16 @@ li:hover,
   font-size: 1rem;
 }
 
-/* Quiz Section */
+.quiz-results {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  margin-top: 30px;
+}
+.quiz-results h2 {
+  color: var(--primary-color);
+  font-size: 2rem;
+}
 .mood-quiz {
   text-align: center;
   margin: 2rem auto;
